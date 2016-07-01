@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0" />
+
+    <title>Add Category</title>
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+    <!-- Materialize -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <!-- Navigation bar -->
+    <nav class="light-blue lighten-1" role="navigation">
+        <div class="nav-wrapper container">
+            <span class="brand-logo"><img src="img/logo.png" height="60px"/></span>
+            <ul class="right hide-on-med-and-down">
+                <li><a href="home.html"><i class="material-icons left">home</i>Home</a></li>
+                <li><a href="edit-categories.html"><i class="material-icons left">build</i>Edit Categories</a></li>
+                <li><a href="#" id="logout"><i class="material-icons left">https</i>Log Out</a></li>
+            </ul>
+
+            <ul id="nav-mobile" class="side-nav">
+                <li><a href="home.html"><i class="material-icons left">home</i>Home</a></li>
+                <li><a href="edit-categories.html"><i class="material-icons left">build</i>Edit Categories</a></li>
+                <li><a href="#" onclick="logout()"><i class="material-icons left">https</i>Log Out</a></li>
+            </ul>
+            <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+
+        </div>
+    </nav>
+
+    <script src="js/logout.js"></script>
+
+    <div class="container" id="data-frame">
+        <div class="section">
+            <h3 class="header col s12 light center" id="heading">Add a Category</h3>
+            <form>
+                <div class="row">
+                    <div class="input-field col s6">
+                        <input id="category_name" name="category_name" type="text">
+                        <label for="category_name">Category Name</label>
+                    </div>
+
+                    <div class="input-field col s6">
+                        <select id="refresh_code" name="refresh_code">
+                            <option value="2">Year</option>
+                            <option value="1">2 Weeks</option>
+                            <option value="0" selected>Month</option>
+                        </select>
+                        <label for="refresh_code">Refresh Every</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s6">
+                        <input id="amount" name="amount" type="number" min="0.01" step="0.01">
+                        <label for="amount">Amount</label>
+                    </div>
+                    <div class="col s6">
+                        <label for="next_refresh">Starting</label>
+                        <input id="next_refresh" name="next_refresh" type="date" class="datepicker">
+                    </div>
+                </div>
+                <div class="row" id="buttons">
+                    <button class="btn waves-effect waves-light" type="button" id="submit">Submit
+                        <i class="material-icons right">send</i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.0.5/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.0.5/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.0.5/firebase-database.js"></script>
+    <script src="js/firebaseinit.js"></script>
+
+    <!--  Scripts-->
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+    <script>
+        $(document).ready(function() {
+    
+            // mobile stuff for the navbar
+            $(".button-collapse").sideNav();
+            $('#refresh_code').material_select();
+
+             // load up when ready
+            firebase.auth().onAuthStateChanged(function(user) {
+                if (user) {
+                    loadPage();
+                } else {
+                    console.log("user is null");
+                }
+            });
+        });
+    </script>
+
+    <script src="js/escapehtml.js"></script>
+    <script src="js/parseget.js"></script>
+    <script src="js/updatebalance.js"></script>
+    <script src="js/edit-category.js"></script>
+
+</body>
+
+</html>
