@@ -35,6 +35,6 @@ function createUser() {
         window.location.href = "index.html";
     }).catch(function(error) {
         // Handle Error
-        Materialize.toast('That email is invalid or already taken.', 4000);
+        Materialize.toast(error.message, 4000);
     });
 }

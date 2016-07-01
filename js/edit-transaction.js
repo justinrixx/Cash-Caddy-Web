@@ -133,7 +133,7 @@ function submit() {
 
 
     if (edit) {
-        firebase.database().ref("transactions/" + rootRef.getAuth().uid + "/" + id).set(obj, function () {
+        firebase.database().ref("transactions/" + firebase.auth().currentUser.uid + "/" + id).set(obj, function () {
             if ($("#category").val() === category) {
                 updateBalance(category, true);
             } else {
@@ -143,7 +143,7 @@ function submit() {
             }
         });
     } else {
-        firebase.database().ref("transactions/" + rootRef.getAuth().uid).push(obj, function () {
+        firebase.database().ref("transactions/" + firebase.auth().currentUser.uid).push(obj, function () {
             updateBalance($("#category").val(), true);
         });
     }
@@ -154,7 +154,7 @@ function submit() {
  * Deletes the transaction denoted by id from the database
  */
 function deleteTransaction() {
-    rootRef.child("transactions/" + rootRef.getAuth().uid + "/" + id).set(null);
+    rootRef.child("transactions/" + firebase.auth().currentUser.uid + "/" + id).set(null);
     updateBalance(category, true);
 }
 
