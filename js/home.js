@@ -27,7 +27,7 @@ function loadData() {
 
                 // value is the category object
                 var value = categorySnapshot.val();
-                var categoryName = categorySnapshot.key;
+                var categoryId = categorySnapshot.key;
 
                 /** Update the date and balance if necessary **/
                 var lastRefresh = Date.parseExact(value.lastRefresh, "yyyy-MM-dd");
@@ -75,17 +75,17 @@ function loadData() {
                 if (update) {
 
                     // set the new date
-                    ref.child(categoryName + '/lastRefresh').set(lastRefresh.toString('yyyy-MM-dd'));
+                    ref.child(categoryId + '/lastRefresh').set(lastRefresh.toString('yyyy-MM-dd'));
 
                     // false -> don't redirect
-                    updateBalance(categoryName, false);
+                    updateBalance(categoryId, false);
                 }
 
                 // grab the balance
                 var balance = value.balance;
 
                 // append the row
-                html += "<tr><td>" + escapeHtml(categoryName) + "</td>";
+                html += "<tr><td>" + escapeHtml(value.name) + "</td>";
                 html += '<td class="';
 
                 // red means negative
@@ -97,7 +97,7 @@ function loadData() {
                 html += '">';
                 html += "$" + (balance / 100.0).toFixed(2) + "</td>";
 
-                html += '<td><a href="view-transactions.html?category=' + categoryName + '">' +
+                html += '<td><a href="view-transactions.html?category=' + categoryId + '">' +
                     '<i class="material-icons right grey-text">list</i></a></td></tr>';
             });
 

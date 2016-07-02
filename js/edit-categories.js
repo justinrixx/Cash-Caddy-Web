@@ -29,7 +29,7 @@ function loadData() {
                 var categoryName = categorySnapshot.key;
 
                 // append the row
-                html += "<tr><td>" + escapeHtml(categoryName) + "</td>";
+                html += "<tr><td>" + escapeHtml(value.name) + "</td>";
                 html += "<td>$" + (value.amount / 100.0).toFixed(2) + "</td>";
                 html += "<td>";
                 if (value.refreshCode == 0) {

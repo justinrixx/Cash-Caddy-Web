@@ -53,13 +53,14 @@ function submit() {
     obj['balance'] = obj['amount'];
     obj['lastRefresh'] = $("#next_refresh").val();
     obj['refreshCode'] = $("#refresh_code").val();
+    obj['name'] = $("#category_name").val();
 
     if (edit) {
         firebase.database().ref("categories/" + firebase.auth().currentUser.uid + "/" + category).set(obj, function () {
             window.location.href = "edit-categories.html";
         });
     } else {
-        firebase.database().ref("categories/" + firebase.auth().currentUser.uid + "/" + $("#category_name").val()).set(obj, function () {
+        firebase.database().ref("categories/" + firebase.auth().currentUser.uid).push(obj, function () {
             window.location.href = "edit-categories.html";
         });
     }

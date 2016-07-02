@@ -43,7 +43,7 @@ function loadPage() {
                 // select
                 snapshot.forEach(function (categorySnapshot) {
                     // put in an option for each category the user owns
-                    html += '<option value="' + categorySnapshot.key + '">' + escapeHtml(categorySnapshot.key) + '</option>';
+                    html += '<option value="' + categorySnapshot.key + '">' + escapeHtml(categorySnapshot.val().name) + '</option>';
                 });
 
                 // close the select
