@@ -1,6 +1,20 @@
 "use strict";
 
 /**
+ * TransactionComparer
+ * Sorts transactions based on the date. Bigger date first.
+ */
+function transactionComparer(a, b) {
+    if (a.date > b.date) {
+        return -1;
+    } else if (b.date > a.date) {
+        return 1;
+    }
+
+    return 0;
+}
+
+/**
  * LoadData
  * Loads the user's data from firebase
  */
@@ -22,8 +36,16 @@ function loadData() {
             // put the table into the html to append
             html += '<table class="striped centered"><thead><tr><th>Date</th><th>Amount</th><th>Comments</th></tr></thead><tbody>';
 
+            var transactions = [];
+            var i = 0;
+
             snapshot.forEach(function (transactionSnapshot) {
 
+                transactions.push(transactionSnapshot.val());
+                transactions[i].key = transactionSnapshot.key;
+                i++;
+
+                /*
                 // value is the transaction object
                 var value = transactionSnapshot.val();
 
@@ -33,8 +55,26 @@ function loadData() {
                 html += "<td>" + escapeHtml(value.comment) + "</td>";
 
                 html += '<td><a href="edit-transaction.html?id=' + transactionSnapshot.key + '">' +
-                    '<i class="material-icons right grey-text">edit</i></a></td></tr>';
+                    '<i class="material-icons right grey-text">edit</i></a></td></tr>'; 
+                */
             });
+
+            // sort the transactions
+            transactions.sort(transactionComparer);
+
+            for (var i = 0; i < transactions.length; i++) {
+
+                // value is the transaction object
+                var value = transactions[i];
+
+                // append the row
+                html += "<tr><td>" + escapeHtml(value.date) + "</td>";
+                html += "<td>$" + (value.amount / 100.0).toFixed(2) + "</td>";
+                html += "<td>" + escapeHtml(value.comment) + "</td>";
+
+                html += '<td><a href="edit-transaction.html?id=' + value.key + '">' +
+                    '<i class="material-icons right grey-text">edit</i></a></td></tr>'; 
+            }
 
             // close the table
             html += '</tbody></table>';
