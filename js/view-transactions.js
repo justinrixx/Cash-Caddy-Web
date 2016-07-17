@@ -39,27 +39,14 @@ function loadData() {
             var transactions = [];
             var i = 0;
 
+            // since I can only filter on one thing (category) I have to
+            // sort by date manually
             snapshot.forEach(function (transactionSnapshot) {
 
                 transactions.push(transactionSnapshot.val());
                 transactions[i].key = transactionSnapshot.key;
                 i++;
-
-                /*
-                // value is the transaction object
-                var value = transactionSnapshot.val();
-
-                // append the row
-                html += "<tr><td>" + escapeHtml(value.date) + "</td>";
-                html += "<td>$" + (value.amount / 100.0).toFixed(2) + "</td>";
-                html += "<td>" + escapeHtml(value.comment) + "</td>";
-
-                html += '<td><a href="edit-transaction.html?id=' + transactionSnapshot.key + '">' +
-                    '<i class="material-icons right grey-text">edit</i></a></td></tr>'; 
-                */
             });
-
-            // sort the transactions
             transactions.sort(transactionComparer);
 
             for (var i = 0; i < transactions.length; i++) {
