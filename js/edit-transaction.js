@@ -5,6 +5,7 @@
  * If not, then we're creating a new transaction.
  */
 var id = parseGet("id");
+var categoryId = parseGet("categoryId");
 var edit = (id !== "Not found");
 var category = null;
 
@@ -79,7 +80,8 @@ function loadPage() {
                 // change the title
                 document.title = "Edit a Transaction";
 
-                var tRef = firebase.database().ref("transactions/" + firebase.auth().currentUser.uid + "/" + id);
+                var tRef = firebase.database().ref("transactions/" + firebase.auth().currentUser.uid
+                 + "/" + categoryId + "/" + id);
                 tRef.once("value", function (snapshot) {
 
                         $("#amount").val((snapshot.val().amount / 100.0).toFixed(2));
@@ -133,7 +135,10 @@ function submit() {
 
 
     if (edit) {
-        firebase.database().ref("transactions/" + firebase.auth().currentUser.uid + "/" + id).set(obj, function () {
+
+        firebase.database().ref("transactions/" + firebase.auth().currentUser.uid 
+            + "/" + categoryId + "/" + id).set(obj, function () {
+
             if ($("#category").val() === category) {
                 updateBalance(category, true);
             } else {
@@ -143,8 +148,9 @@ function submit() {
             }
         });
     } else {
-        firebase.database().ref("transactions/" + firebase.auth().currentUser.uid).push(obj, function () {
-            updateBalance($("#category").val(), true);
+        firebase.database().ref("transactions/" + firebase.auth().currentUser.uid 
+            + "/" + obj['category']).push(obj, function () {
+            updateBalance(obj['category'], true);
         });
     }
 }
@@ -154,7 +160,7 @@ function submit() {
  * Deletes the transaction denoted by id from the database
  */
 function deleteTransaction() {
-    rootRef.child("transactions/" + firebase.auth().currentUser.uid + "/" + id).set(null);
+    firebase.database().ref("transactions/" + firebase.auth().currentUser.uid + "/" + categoryId + "/" + id).set(null);
     updateBalance(category, true);
 }
 

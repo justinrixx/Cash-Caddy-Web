@@ -1,18 +1,5 @@
 "use strict";
 
-/**
- * TransactionComparer
- * Sorts transactions based on the date. Bigger date first.
- */
-function transactionComparer(a, b) {
-    if (a.date > b.date) {
-        return -1;
-    } else if (b.date > a.date) {
-        return 1;
-    }
-
-    return 0;
-}
 
 /**
  * LoadData
@@ -20,10 +7,10 @@ function transactionComparer(a, b) {
  */
 function loadData() {
 
-    var ref = firebase.database().ref("transactions/" + firebase.auth().currentUser.uid);
+    var ref = firebase.database().ref("transactions/" + firebase.auth().currentUser.uid + "/" + parseGet("category"));
 
     // load everything
-    ref.orderByChild("category").equalTo(parseGet("category")).on("value", function (snapshot) {
+    ref.orderByChild("date").on("value", function (snapshot) {
 
         // the html to append
         var html = "";
@@ -47,7 +34,7 @@ function loadData() {
                 transactions[i].key = transactionSnapshot.key;
                 i++;
             });
-            transactions.sort(transactionComparer);
+            transactions.reverse();
 
             for (var i = 0; i < transactions.length; i++) {
 
@@ -59,7 +46,8 @@ function loadData() {
                 html += "<td>$" + (value.amount / 100.0).toFixed(2) + "</td>";
                 html += "<td>" + escapeHtml(value.comment) + "</td>";
 
-                html += '<td><a href="edit-transaction.html?id=' + value.key + '">' +
+                html += '<td><a href="edit-transaction.html?id=' + value.key 
+                + '&categoryId=' + parseGet("category") + '">' +
                     '<i class="material-icons right grey-text">edit</i></a></td></tr>'; 
             }
 

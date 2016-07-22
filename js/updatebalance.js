@@ -50,19 +50,19 @@ function updateBalance(category, redirect) {
         var delta = 0;
 
         // get all the transactions in the category
-        ref.ref("transactions/" + firebase.auth().currentUser.uid).orderByChild("date").startAt(snapshot.val().lastRefresh).once("value", function (transactionSnapshot) {
-            transactionSnapshot.forEach(function (snap) {
-                if (snap.val().category === category) {
-                    delta += snap.val().amount;
-                }
+        ref.ref("transactions/" + firebase.auth().currentUser.uid + "/" + category).orderByChild("date").startAt(snapshot.val().lastRefresh).once("value", function (transactionSnapshot) {
 
-                // now update the balance
-                ref.ref("categories/" + firebase.auth().currentUser.uid + "/" + category + "/balance").set(snapshot.val().amount - delta, function () {
-                    // redirect if necessary
-                    if (redirect) {
-                        window.location.href = "home.html";
-                    }
-                });
+            //debugger;
+
+            for (var key in transactionSnapshot.val()) {
+                delta += transactionSnapshot.val()[key].amount;
+            }
+
+            ref.ref("categories/" + firebase.auth().currentUser.uid + "/" + category + "/balance").set(snapshot.val().amount - delta, function () {
+                // redirect if necessary
+                if (redirect) {
+                    window.location.href = "home.html";
+                }
             });
         });
     });

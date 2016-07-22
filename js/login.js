@@ -10,15 +10,15 @@ function setClickListeners() {
  */
 function signIn() {
 
-    // check if the user is already logged in
-    if (firebase.auth().currentUser) {
-        window.location.href = "home.html";
-        return;
-    }
-
     // get the values to check
     var email = $("#email").val();
     var passw = $("#password").val();
+
+    // check if the user is already logged in
+    if (firebase.auth().currentUser && (email === null || email === "")) {
+        window.location.href = "home.html";
+        return;
+    }
 
     // check for a valid email
     if (email === null || email === "") {
