@@ -17,7 +17,7 @@ function loadPage() {
         // get the category from the database
         firebase.database().ref("categories/" + firebase.auth().currentUser.uid + "/" + category).on("value", function (snapshot) {
 
-            $("#category_name").val(snapshot.key);
+            $("#category_name").val(snapshot.val().name);
             $("#amount").val((snapshot.val().amount / 100.0).toFixed(2));
             $("#next_refresh").val(snapshot.val().lastRefresh);
 
