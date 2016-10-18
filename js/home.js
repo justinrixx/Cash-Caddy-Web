@@ -1,5 +1,17 @@
 "use strict";
 
+function test() {
+    alert("test done");
+}
+
+/**
+ * Make Toast
+ * Make a toast allowing the user to delete the transaction they just created
+ */
+ function makeToast() {
+    Materialize.toast('Toast just happened <span color="orange" onclick="test()">Click me</span>', 4000);
+ }
+
 /**
  * LoadData
  * Loads the user's data from firebase
