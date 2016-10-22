@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0" />
+
+    <title>Home</title>
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+    <!-- Materialize -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Datejs -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/datejs/1.0/date.min.js"></script>
+
+</head>
+
+<body>
+
+    <!-- Navigation bar -->
+    <nav class="light-blue lighten-1" role="navigation">
+        <div class="nav-wrapper container">
+            <span class="brand-logo"><img src="img/logo.png" height="60px"/></span>
+            <ul class="right hide-on-med-and-down">
+                <li><a href="home.html"><i class="material-icons left">home</i>Home</a></li>
+                <li><a href="edit-categories.html"><i class="material-icons left">build</i>Edit Categories</a></li>
+                <li><a href="#" id="logout"><i class="material-icons left">https</i>Log Out</a></li>
+            </ul>
+
+            <ul id="nav-mobile" class="side-nav">
+                <li><a href="home.html"><i class="material-icons left">home</i>Home</a></li>
+                <li><a href="edit-categories.html"><i class="material-icons left">build</i>Edit Categories</a></li>
+                <li><a href="#" onclick="logout()"><i class="material-icons left">https</i>Log Out</a></li>
+            </ul>
+            <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+
+        </div>
+    </nav>
+
+    <div class="container">
+    <h3 class="header col s12 light center">Balances</h3>
+        <div class="section" id="data-frame">
+
+        <!-- Hard coded stuff -->
+            <div class="row">
+                <div class="col s8 m4">
+                    <ul class="collection with-header z-depth-2">
+                        <li class="collection-header"><h4>Grocery</h4></li>
+                        <li class="collection-item">12-18-16 $12.87</li>
+                        <li class="collection-item">12-22-16 $32.33</li>
+                        <li class="collection-item">12-31-16 $13.53</li>
+                        <li class="collection-item red-text"><b>-$12.32</b><a href="#!" class="secondary-content"><i class="material-icons">list</i></a></li>
+                    </ul>
+                </div>
+                <div class="col s8 m4">
+                    <ul class="collection with-header z-depth-2">
+                        <li class="collection-header"><h4>Gas</h4></li>
+                        <li class="collection-item">12-15-16 $31.72</li>
+                        <li class="collection-item">12-21-16 $32.26</li>
+                        <li class="collection-item">12-26-16 $41.80</li>
+                        <li class="collection-item green-text"><b>$15.21</b><a href="#!" class="secondary-content"><i class="material-icons">list</i></a></li>
+                    </ul>
+                </div>
+                <div class="col s8 m4">
+                    <ul class="collection with-header z-depth-2">
+                        <li class="collection-header"><h4>Eating Out</h4></li>
+                        <li class="collection-item">10-19-16 $22.23</li>
+                        <li class="collection-item">10-31-16 $21.17</li>
+                        <li class="collection-item">11-15-16 $14.53</li>
+                        <li class="collection-item red-text"><b>-$2.21</b><a href="#!" class="secondary-content"><i class="material-icons">list</i></a></li>
+                    </ul>
+                </div>
+                <div class="col s8 m4">
+                    <ul class="collection with-header z-depth-2">
+                        <li class="collection-header"><h4>Electricity</h4></li>
+                        <li class="collection-item">09-18-16 $21.35</li>
+                        <li class="collection-item">10-18-16 $22.46</li>
+                        <li class="collection-item">11-18-16 $19.84</li>
+                        <li class="collection-item red-text"><b>-$12.32</b><a href="#!" class="secondary-content"><i class="material-icons">list</i></a></li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Floating Action Button -->
+    <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+        <a class="btn-floating btn-large waves-effect waves-light orange tooltipped"
+         data-position="left" data-delay="50" data-tooltip="New Transaction"
+         href="edit-transaction.html">
+            <i class="large material-icons">add</i>
+        </a>
+    </div>
+
+
+    <!--  Scripts-->
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // mobile stuff for the navbar
+            $(".button-collapse").sideNav();
+        });
+    </script>
+
+</body>
+
+</html>
