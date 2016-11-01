@@ -1,15 +1,13 @@
 "use strict";
 
-function test() {
-    alert("test done");
-}
-
 /**
  * Make Toast
  * Make a toast allowing the user to delete the transaction they just created
  */
  function makeToast() {
-    Materialize.toast('Toast just happened <span color="orange" onclick="test()">Click me</span>', 4000);
+    var $toastContent = $('<span>Transaction Created <a href="#!" class="undobutton">UNDO</a></span>');
+    Materialize.toast($toastContent, 5000);
+    //Materialize.toast('Toast just happened <span color="orange" onclick="test()">Click me</span>', 4000);
  }
 
 /**
@@ -20,6 +18,8 @@ function loadData() {
 
     // https://###.firebaseio.com/categories/uid
     var ref = firebase.database().ref("categories/" + firebase.auth().currentUser.uid);
+
+    var done = false;
 
     // load everything
     ref.on("value", function (snapshot) {
@@ -33,7 +33,8 @@ function loadData() {
 
         } else {
             // put the table into the html to append
-            html += '<table class="striped centered"><thead><tr><th>Category</th><th>Net</th></tr></thead><tbody>';
+            //html += '<table class="striped centered"><thead><tr><th>Category</th><th>Net</th></tr></thead><tbody>';
+            html += '<div class="row">';
 
             snapshot.forEach(function (categorySnapshot) {
 
@@ -96,6 +97,7 @@ function loadData() {
                 // grab the balance
                 var balance = value.balance;
 
+                /* OLD WAY
                 // append the row
                 html += "<tr><td>" + escapeHtml(value.name) + "</td>";
                 html += '<td class="';
@@ -111,13 +113,50 @@ function loadData() {
 
                 html += '<td><a href="view-transactions.html?category=' + categoryId + '">' +
                     '<i class="material-icons right grey-text">list</i></a></td></tr>';
+                */
+                // NEW WAY
+                // add the category title
+                html += '<div class="col s8 m4">';
+                html += '<ul class="collection with-header z-depth-2" id="' + categoryId.slice(1) + '">';
+                html += '<li class="collection-header"><h4>' + escapeHtml(value.name) + '</h4></li>';
+
+                var ref2 = firebase.database().ref("transactions/" + firebase.auth().currentUser.uid + "/" + categoryId);
+                ref2.orderByChild("date").limitToLast(3).on("value", function (snapshot) {
+                    // add transactions if they exist
+                    if (snapshot.val() !== null) {
+                        snapshot.forEach(function (itemSnapshot) {
+                            var item = '';
+                            item += '<li class="collection-item">';
+                            item += itemSnapshot.val().date + ' $' + (itemSnapshot.val().amount / 100.0).toFixed(2);
+                            item += '</li>';
+                            //$('#' + itemSnapshot.val().category.slice(1)).append(item);
+                            console.log('ul#' + itemSnapshot.val().category.slice(1) + ':first');
+                            $(item).insertAfter('ul#' + itemSnapshot.val().category.slice(1) + ' li.collection-header');
+                        });
+                    }
+                });
+
+                // close the card
+                html += '<li class="collection-item ';
+                if (balance >= 0) {
+                    html += 'green-text';
+                } else {
+                    html += 'red-text';
+                }
+                html += '"><b>';
+                html += '$' + (balance / 100.0).toFixed(2);
+                html += '</b><a href="#!" class="secondary-content"><i class="material-icons">list</i></a></li></ul></div>';
+
+
             });
 
             // close the table
-            html += '</tbody></table>';
+            //html += '</tbody></table>';
+            html += '</div>';
         }
 
         $("#data-frame").html(html);
+
     }, function (errorObject) {
         console.log("The read failed: " + errorObject.code);
     });
