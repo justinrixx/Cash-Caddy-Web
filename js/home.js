@@ -33,7 +33,6 @@ function loadData() {
 
         } else {
             // put the table into the html to append
-            //html += '<table class="striped centered"><thead><tr><th>Category</th><th>Net</th></tr></thead><tbody>';
             html += '<div class="row">';
 
             snapshot.forEach(function (categorySnapshot) {
@@ -97,24 +96,6 @@ function loadData() {
                 // grab the balance
                 var balance = value.balance;
 
-                /* OLD WAY
-                // append the row
-                html += "<tr><td>" + escapeHtml(value.name) + "</td>";
-                html += '<td class="';
-
-                // red means negative
-                if (balance >= 0) {
-                    html += "green-text";
-                } else {
-                    html += "red-text";
-                }
-                html += '">';
-                html += "$" + (balance / 100.0).toFixed(2) + "</td>";
-
-                html += '<td><a href="view-transactions.html?category=' + categoryId + '">' +
-                    '<i class="material-icons right grey-text">list</i></a></td></tr>';
-                */
-                // NEW WAY
                 // add the category title
                 html += '<div class="col s8 m4">';
                 html += '<ul class="collection with-header z-depth-2" id="' + categoryId.slice(1) + '">';
@@ -129,8 +110,6 @@ function loadData() {
                             item += '<li class="collection-item">';
                             item += itemSnapshot.val().date + ' $' + (itemSnapshot.val().amount / 100.0).toFixed(2);
                             item += '</li>';
-                            //$('#' + itemSnapshot.val().category.slice(1)).append(item);
-                            console.log('ul#' + itemSnapshot.val().category.slice(1) + ':first');
                             $(item).insertAfter('ul#' + itemSnapshot.val().category.slice(1) + ' li.collection-header');
                         });
                     }
@@ -150,8 +129,7 @@ function loadData() {
 
             });
 
-            // close the table
-            //html += '</tbody></table>';
+            // close the div
             html += '</div>';
         }
 
