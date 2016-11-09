@@ -80,6 +80,7 @@
             // load up when ready
             firebase.auth().onAuthStateChanged(function(user) {
                 if (user) {
+                    makeToast();
                     loadData();
                 } else {
                     console.log("user is null");
@@ -90,6 +91,7 @@
 
     <script src="js/escapehtml.js"></script>
     <script src="js/updatebalance.js"></script>
+    <script src="js/parseget.js"></script>
     <script src="js/home.js"></script>
 
 </body>

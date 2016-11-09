@@ -4,7 +4,7 @@
  * UpdateBalance
  * Update the balance for the category desired
  */
-function updateBalance(category, redirect) {
+function updateBalance(category, redirect, address) {
 
     var ref = firebase.database();
 
@@ -61,7 +61,11 @@ function updateBalance(category, redirect) {
             ref.ref("categories/" + firebase.auth().currentUser.uid + "/" + category + "/balance").set(snapshot.val().amount - delta, function () {
                 // redirect if necessary
                 if (redirect) {
-                    window.location.href = "home.html";
+                    if (!address) {
+                        window.location.href = "home.html";
+                    } else {
+                        window.location.href = address;
+                    }
                 }
             });
         });

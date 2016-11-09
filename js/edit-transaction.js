@@ -148,9 +148,11 @@ function submit() {
             }
         });
     } else {
-        firebase.database().ref("transactions/" + firebase.auth().currentUser.uid 
+        var newRef = firebase.database().ref("transactions/" + firebase.auth().currentUser.uid 
             + "/" + obj['category']).push(obj, function () {
-            updateBalance(obj['category'], true);
+                var arr = newRef.toString().split('/');
+                var newId = arr[arr.length - 1];
+            updateBalance(obj['category'], true, 'home.html?transaction=' + newId + '&category=' + obj['category']);
         });
     }
 }

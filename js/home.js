@@ -5,10 +5,36 @@
  * Make a toast allowing the user to delete the transaction they just created
  */
  function makeToast() {
+
+    /*
     var $toastContent = $('<span>Transaction Created <a href="#!" class="undobutton">UNDO</a></span>');
+    $toastContent.click(function() {
+        alert('Clicked');
+    });
     Materialize.toast($toastContent, 5000);
-    //Materialize.toast('Toast just happened <span color="orange" onclick="test()">Click me</span>', 4000);
- }
+    */
+
+    // only make the toast if something was created
+
+    var tranasctionId = parseGet('transaction');
+    var categoryId = parseGet('category');
+
+    if (tranasctionId == 'Not found' || categoryId == 'Not found') {
+        return;
+    }
+
+    // construct the path
+    var path = 'transactions/' + firebase.auth().currentUser.uid + '/' + categoryId + '/' + tranasctionId;
+
+    // make the toast
+    var $toastContent = $('<span>Transaction Deleted <a href="#!" class="undobutton">UNDO</a></span>');
+    $toastContent.click(function() {
+        // delete the transaction and update the balance
+        firebase.database().ref(path).set(null);
+        updateBalance(categoryId, true);
+    });
+    Materialize.toast($toastContent, 5000);
+}
 
 /**
  * LoadData
@@ -124,7 +150,7 @@ function loadData() {
                 }
                 html += '"><b>';
                 html += '$' + (balance / 100.0).toFixed(2);
-                html += '</b><a href="#!" class="secondary-content"><i class="material-icons">list</i></a></li></ul></div>';
+                html += '</b><a href="view-transactions.html?category=' + categoryId + '" class="secondary-content"><i class="material-icons">list</i></a></li></ul></div>';
 
 
             });
