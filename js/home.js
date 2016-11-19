@@ -27,7 +27,7 @@
     var path = 'transactions/' + firebase.auth().currentUser.uid + '/' + categoryId + '/' + tranasctionId;
 
     // make the toast
-    var $toastContent = $('<span>Transaction Deleted <a href="#!" class="undobutton">UNDO</a></span>');
+    var $toastContent = $('<span>Transaction Created <a href="#!" class="undobutton">UNDO</a></span>');
     $toastContent.click(function() {
         // delete the transaction and update the balance
         firebase.database().ref(path).set(null);
