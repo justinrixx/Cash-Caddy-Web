@@ -99,6 +99,11 @@ function loadPage() {
                 // set listener
                 $("#delete").on("click", deleteTransaction);
 
+                // set the dropdown
+                // http://stackoverflow.com/questions/7373058/changing-the-selected-option-of-an-html-select-element
+                var val = category;
+                $('#sel option:contains(' + val + ')').prop({selected: true});
+
             } else {
                 // set the calendar to today for convenience
                 document.getElementById("transaction_date").valueAsDate = new Date();
