@@ -151,7 +151,7 @@ function loadData() {
                 html += '"><b>';
                 html += '$' + (balance / 100.0).toFixed(2);
                 html += '</b></li>';
-                html += '<li><span style="margin-left:30px;"><a href="view-transactions.html?category=' + categoryId + '">View Transactions</a></span></li></ul></div>';
+                html += '<li class="collection-item"><a href="view-transactions.html?category=' + categoryId + '">View Transactions</a></li></ul></div>';
 
 
             });
