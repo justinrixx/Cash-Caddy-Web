@@ -150,7 +150,8 @@ function loadData() {
                 }
                 html += '"><b>';
                 html += '$' + (balance / 100.0).toFixed(2);
-                html += '</b><a href="view-transactions.html?category=' + categoryId + '" class="secondary-content"><i class="material-icons">list</i></a></li></ul></div>';
+                html += '</b></li>';
+                html += '<li><span style="margin-left:30px;"><a href="view-transactions.html?category=' + categoryId + '">View Transactions</a></span></li></ul></div>';
 
 
             });
